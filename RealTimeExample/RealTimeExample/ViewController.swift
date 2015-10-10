@@ -10,40 +10,30 @@ import Cocoa
 
 class ViewController: NSViewController {
     
-     @IBOutlet weak var graphView: CPTGraphHostingView!
+    @IBOutlet weak var graphView: CPTGraphHostingView!
     
+    let graph = CPTXYGraph(frame: CGRectZero)
+    let theme = MyTheme()
     var data = [Double]()
+    
+    var timer: NSTimer? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         // Setting up graph
-        let graph = CPTXYGraph(frame: CGRectZero)
-        let theme = CPTTheme(named: "kCPTDarkGradientTheme")
+        
         graph.applyTheme(theme)
         
-        // Set a styled title
-        let textStyle = CPTMutableTextStyle()
-        textStyle.color = CPTColor.whiteColor()
-        textStyle.fontSize = 18.0
-        textStyle.fontName = "Helvetica"
         graph.title = "Battery Voltage"
-        graph.titleTextStyle = textStyle
         
         // Setup Scatter Plot Space
-        let plotSpace = graph.defaultPlotSpace
-        plotSpace?.allowsUserInteraction = true
-        plotSpace?.delegate = self
+        let plotSpace = graph.defaultPlotSpace as! CPTXYPlotSpace
+        plotSpace.allowsUserInteraction = true
+        plotSpace.delegate = self
         
         // Grid line styles
-        let majorGridLineStyle = CPTMutableLineStyle()
-        majorGridLineStyle.lineWidth = 1.0
-        majorGridLineStyle.lineColor = CPTColor.blackColor()
-        
-        let redLineStyle = CPTMutableLineStyle()
-        redLineStyle.lineWidth = 1.0
-        redLineStyle.lineColor = CPTColor.redColor()
         
         // Axes
         
@@ -51,7 +41,7 @@ class ViewController: NSViewController {
         let plot = CPTScatterPlot()
         plot.identifier = "Scatter Plot"
         
-        plot.dataLineStyle = redLineStyle
+        //plot.dataLineStyle = redLineStyle
         plot.delegate = self
         plot.dataSource = self
         
@@ -66,7 +56,7 @@ class ViewController: NSViewController {
         // Extend the y range by 10% for neatness
         //CPTXYPlotSpace *plotSpace = (id)graph.defaultPlotSpace;
         //[plotSpace scaleToFitPlots:[NSArray arrayWithObjects:wahooHeartRateLinePlot, nil]];
-        plotSpace?.scaleToFitPlots([plot])
+        plotSpace.scaleToFitPlots([plot])
         //plotSpace?.xRange = CPTPlotRange(location: 0, length: 10)
         //plotSpace.yRange = CPTPlotRange(location: 0, length: 200)
         
@@ -75,8 +65,11 @@ class ViewController: NSViewController {
         
         //CPTPlotRange *globalYRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat(260.0f)];
         //plotSpace.globalYRange = globalYRange;
+        let globalYRange = CPTPlotRange(location: 0.0, length: 260)
+        plotSpace.globalYRange = globalYRange
         
         self.graphView.hostedGraph = graph
+        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "update", userInfo: nil, repeats: true)
     }
 
     override var representedObject: AnyObject? {
@@ -84,14 +77,22 @@ class ViewController: NSViewController {
         // Update the view, if already loaded.
         }
     }
-
+    
+    func update() {
+        var avg = [Double](count: 1, repeatedValue: 0)
+        getloadavg(&avg, 1)
+        
+        data += avg
+        graph.reloadData()
+        print(avg)
+    }
 
 }
 
 extension ViewController: CPTPlotDataSource, CPTPlotSpaceDelegate {
     //-(NSUInteger)numberOfRecordsForPlot:(nonnull CPTPlot *)plot;
     func numberOfRecordsForPlot(plot: CPTPlot) -> UInt {
-        return 1
+        return UInt(data.count)
     }
     
     func numberForPlot(plot: CPTPlot, field fieldEnum: UInt, recordIndex idx: UInt) -> AnyObject? {
@@ -100,7 +101,7 @@ extension ViewController: CPTPlotDataSource, CPTPlotSpaceDelegate {
         case 0:
             return idx
         case 1:
-            return 1
+            return data[Int(idx)]
         default:
             return 0
         }

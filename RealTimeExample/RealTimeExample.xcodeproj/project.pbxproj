@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		38D8A3D87FD0E82B062AE0A1 /* libPods-RealTimeExample.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D3147C29E5156806417630F5 /* libPods-RealTimeExample.a */; };
+		E67E52E61BC86A8E003EEB67 /* MyTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = E67E52E51BC86A8D003EEB67 /* MyTheme.swift */; };
 		E6FB3D4D1BC7B12000D84574 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FB3D4C1BC7B12000D84574 /* AppDelegate.swift */; };
 		E6FB3D4F1BC7B12000D84574 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E6FB3D4E1BC7B12000D84574 /* ViewController.swift */; };
 		E6FB3D511BC7B12000D84574 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E6FB3D501BC7B12000D84574 /* Assets.xcassets */; };
@@ -19,6 +20,7 @@
 		89C6DA39000A9EFF7DDE6037 /* Pods-RealTimeExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RealTimeExample.release.xcconfig"; path = "Pods/Target Support Files/Pods-RealTimeExample/Pods-RealTimeExample.release.xcconfig"; sourceTree = "<group>"; };
 		D3147C29E5156806417630F5 /* libPods-RealTimeExample.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RealTimeExample.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E67E52E41BC7BC6B003EEB67 /* RealTimeExample-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RealTimeExample-Bridging-Header.h"; sourceTree = "<group>"; };
+		E67E52E51BC86A8D003EEB67 /* MyTheme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTheme.swift; sourceTree = "<group>"; };
 		E6FB3D491BC7B12000D84574 /* RealTimeExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RealTimeExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6FB3D4C1BC7B12000D84574 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E6FB3D4E1BC7B12000D84574 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 			children = (
 				E6FB3D4C1BC7B12000D84574 /* AppDelegate.swift */,
 				E6FB3D4E1BC7B12000D84574 /* ViewController.swift */,
+				E67E52E51BC86A8D003EEB67 /* MyTheme.swift */,
 				E67E52E41BC7BC6B003EEB67 /* RealTimeExample-Bridging-Header.h */,
 				E6FB3D501BC7B12000D84574 /* Assets.xcassets */,
 				E6FB3D521BC7B12000D84574 /* Main.storyboard */,
@@ -192,6 +195,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E67E52E61BC86A8E003EEB67 /* MyTheme.swift in Sources */,
 				E6FB3D4F1BC7B12000D84574 /* ViewController.swift in Sources */,
 				E6FB3D4D1BC7B12000D84574 /* AppDelegate.swift in Sources */,
 			);
