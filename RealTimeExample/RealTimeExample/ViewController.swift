@@ -15,6 +15,8 @@ class ViewController: NSViewController {
     let graph = CPTXYGraph(frame: CGRectZero)
     let theme = MyTheme()
     var data = [Double]()
+    var max = 0.0
+    var min = 0.0
     
     var timer: NSTimer? = nil
     
@@ -57,8 +59,8 @@ class ViewController: NSViewController {
         //CPTXYPlotSpace *plotSpace = (id)graph.defaultPlotSpace;
         //[plotSpace scaleToFitPlots:[NSArray arrayWithObjects:wahooHeartRateLinePlot, nil]];
         plotSpace.scaleToFitPlots([plot])
-        //plotSpace?.xRange = CPTPlotRange(location: 0, length: 10)
-        //plotSpace.yRange = CPTPlotRange(location: 0, length: 200)
+        plotSpace.xRange = CPTPlotRange(location: 0, length: 10)
+        plotSpace.yRange = CPTPlotRange(location: 0, length: 20)
         
         
         // Restrict y range to a global range
@@ -83,8 +85,25 @@ class ViewController: NSViewController {
         getloadavg(&avg, 1)
         
         data += avg
+        if avg[0] > max {
+            max = avg[0]
+        }
+        if avg[0] < min {
+            min = avg[0]
+        }
+        
         graph.reloadData()
         print(avg)
+        
+        
+        let plotSpace = graph.defaultPlotSpace as! CPTXYPlotSpace
+        // To rescale the plot to include everything in the data array use the following.
+        //plotSpace.scaleToFitPlots([graph.plotAtIndex(0)!])
+        
+        // If you want a view that tracks the latest 20 values use the following.
+        plotSpace.xRange = CPTPlotRange(location: data.count - 20, length: 20)
+        plotSpace.yRange = CPTPlotRange(location: 0, length: max * 1.1)
+        
     }
 
 }
