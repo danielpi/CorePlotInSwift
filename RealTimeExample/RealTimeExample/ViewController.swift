@@ -28,7 +28,7 @@ class ViewController: NSViewController {
         
         graph.applyTheme(theme)
         
-        graph.title = "Battery Voltage"
+        graph.title = "CPU Load or Something"
         
         // Setup Scatter Plot Space
         let plotSpace = graph.defaultPlotSpace as! CPTXYPlotSpace
@@ -49,26 +49,22 @@ class ViewController: NSViewController {
         
         graph.addPlot(plot)
         
-        graph.paddingLeft = 0
-        graph.paddingTop = 0
-        graph.paddingRight = 0
-        graph.paddingBottom = 0
+        graph.paddingLeft = 60
+        graph.paddingTop = 30
+        graph.paddingRight = 30
+        graph.paddingBottom = 30
+        graph.plotAreaFrame!.masksToBorder = false
         
         // Auto scale the plot space to fit the plot data
         // Extend the y range by 10% for neatness
-        //CPTXYPlotSpace *plotSpace = (id)graph.defaultPlotSpace;
-        //[plotSpace scaleToFitPlots:[NSArray arrayWithObjects:wahooHeartRateLinePlot, nil]];
         plotSpace.scaleToFitPlots([plot])
         plotSpace.xRange = CPTPlotRange(location: 0, length: 10)
         plotSpace.yRange = CPTPlotRange(location: 0, length: 20)
         
-        
-        // Restrict y range to a global range
-        
-        //CPTPlotRange *globalYRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0.0f) length:CPTDecimalFromFloat(260.0f)];
-        //plotSpace.globalYRange = globalYRange;
-        let globalYRange = CPTPlotRange(location: 0.0, length: 260)
-        plotSpace.globalYRange = globalYRange
+        // This stops you from scrolling off into ranges that can't have values.
+        plotSpace.globalXRange = CPTPlotRange(location: 0, length: 64000)
+        plotSpace.globalYRange = CPTPlotRange(location: 0, length: 30)
+
         
         self.graphView.hostedGraph = graph
         timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: "update", userInfo: nil, repeats: true)
